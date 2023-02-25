@@ -1,0 +1,57 @@
+.outputs {
+    height: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: start;
+    overflow-wrap: break-word;
+    margin-bottom: 10px;
+}
+
+.commands {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.commands .right-block {
+    display: flex;
+    justify-self: flex-end;
+}
+
+.left-commands {
+    display: flex;
+    gap: 10px;
+}
+
+.right-commands {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+}
+
+.chat-commands {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+}
+
+@media screen and (max-width: 600px) {
+    .commands {
+        width: 100%;
+        flex-direction: column;
+        align-content: flex-start;
+        row-gap: 10px;
+    }
+
+    .chat-commands {
+        order:1;
+    }
+    .left-commands {
+        order:2;
+    }
+    .right-commands {
+       order: 3;
+    }
+}
