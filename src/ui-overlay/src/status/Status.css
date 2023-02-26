@@ -1,0 +1,19 @@
+.status {
+    position: absolute;
+    elevation: higher;
+    left: 60px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* border: 1px solid; */
+    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1;
+    background-color: #1a1a1a;
+}
+
+.status.row {
+    display: flex;
+}
