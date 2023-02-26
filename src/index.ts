@@ -52,7 +52,7 @@ const send = (command: string): Promise<void> => {
     });
 }
 
-app.use(express.static(path.join(__dirname, 'src/ui-overlay/dist')));
+app.use(express.static(path.join(__dirname, 'ui')));
 
 app.get("/outputs", (req, res) => {
     res.send(Array.from(minecraftProcessOutPut).reverse());
