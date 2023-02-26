@@ -2,19 +2,25 @@ import express from 'express';
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import * as path from "path";
 import * as process from "process";
-import axios from "axios";
+import {getConfiguration} from "./Configuration";
 const app = express();
 const port = process.argv[2] ?? 3000;
-
 
 interface MinecraftProcessProps {
     onOutputData: (val: string) => void;
     onErrorData: (val: string) => void;
 }
 
+const configuration = getConfiguration();
+
 let minecraftProcessOutPut: string[] = [];
 const createMinecraftProcess = ({ onOutputData, onErrorData }: MinecraftProcessProps) => {
-    const mineCraftProcess = spawn('java', ['-Xmx2G', '-jar', 'fabric-server-launch.jar', 'nogui']);
+    console.log('Start server with this config', configuration);
+    const mineCraftProcess = spawn('java', [
+        ...configuration.JavaOptions,
+        '-jar',
+        configuration.JarFile,
+        ...configuration.ServerOptions]);
 
     mineCraftProcess.stdout.on('data', data => {
         console.log(`child data:\n${data}`);
@@ -56,6 +62,10 @@ app.get("/isStarted", (req, res) => {
    res.send(mineCraftProcess !== undefined);
 });
 
+app.get("/config", (req, res) => {
+   res.send(configuration);
+});
+
 app.post("/start", (req, res) => {
    if (mineCraftProcess !== undefined) {
        console.error('minecraftprosse running');
@@ -85,9 +95,9 @@ app.post('/stop', (req, res) => {
 app.post("/send", (req, res) => {
     mineCraftProcess?.stdin.write(`${req.query.command}\n`, (error) => {
         if (error) {
-            console.error('send failted', error);
+            console.error('send failed', error);
         } else {
-            console.log('succed')
+            console.log('succeed')
         }
     });
     res.sendStatus(200);
