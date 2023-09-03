@@ -1,15 +1,17 @@
 import {useState} from "react";
 import { FaPlay, FaStop } from 'react-icons/fa'
 import '../index.css';
+import {useServerApi} from "../useServerApi";
 
 export function ServerOnOff() {
+    const createRequestPath = useServerApi();
     const [started, setStarted] = useState(true);
 
     const start = async () => {
         try {
 
             debugger;
-            const response = await fetch('/start', { method: 'post' });
+            const response = await fetch(createRequestPath(`start`), { method: 'post' });
             if (response.ok) {
                 setStarted(true);
             }
@@ -19,7 +21,7 @@ export function ServerOnOff() {
     };
 
     const stop = async () => {
-        await fetch('/stop', { method: 'post' });
+        await fetch(createRequestPath('stop'), { method: 'post' });
         setStarted(false);
     };
 

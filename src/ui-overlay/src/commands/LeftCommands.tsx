@@ -1,14 +1,15 @@
 import {ServerOnOff} from "./ServerOnOff";
 import {FaSave, FaTrash} from "react-icons/fa";
 import {FiUsers} from "react-icons/fi";
-import Status from "../status/Status";
+import {useServerApi} from "../useServerApi";
 
-export const LeftCommands = () => (
-    <div className='left-commands'>
-        <Status />
+export const LeftCommands = () => {
+    const createRequestPath = useServerApi();
+    return (<div className='left-commands'>
         <ServerOnOff />
-        <button className='primary' onClick={() => fetch('/save', { method: 'POST' }).then()}><FaSave /></button>
-        <button className='primary' onClick={() => fetch("/clear", { method: 'post'}).then()}><FaTrash /></button>
-        <button className='primary' onClick={() => fetch("/send?command=list", { method: 'post'}).then()}><FiUsers /></button>
+        <button className='primary' onClick={() => fetch(createRequestPath(`save`), { method: 'POST' }).then()}><FaSave /></button>
+        <button className='primary' onClick={() => fetch(createRequestPath(`clear`), { method: 'post'}).then()}><FaTrash /></button>
+        <button className='primary' onClick={() => fetch(createRequestPath(`send?command=list`), { method: 'post'}).then()}><FiUsers /></button>
     </div>
-);
+)
+};

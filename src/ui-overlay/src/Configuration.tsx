@@ -1,15 +1,15 @@
 import {createContext, PropsWithChildren, useContext} from "react";
-import {AppConfig} from "../../Configuration";
+import {ServerConfig} from "../../Configuration";
 
-const ConfigContext = createContext<AppConfig | undefined>(undefined);
+const ConfigContext = createContext<ServerConfig | undefined>(undefined);
 
 interface Props {
-    config: AppConfig;
+    config: ServerConfig;
 }
 export function ConfigProvider({ config, children }: PropsWithChildren<Props>) {
     return <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>;
 }
 
-export function useConfiguration(): AppConfig {
+export function useConfiguration(): ServerConfig {
     return useContext(ConfigContext)!;
 }

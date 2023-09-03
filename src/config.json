@@ -1,0 +1,12 @@
+{
+  "Servers":[
+    {
+      "JarFile": "fabric-server-launch.jar",
+      "JavaOptions": ["-Xmx2G"],
+      "ServerOptions": ["nogui"]
+    },
+    {
+
+    }
+  ]
+}

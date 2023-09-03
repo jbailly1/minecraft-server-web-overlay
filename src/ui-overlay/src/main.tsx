@@ -2,16 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
-import {ConfigProvider} from "./Configuration";
+import {ServersProvider} from "./ServersProvider";
 
-fetch('/config')
+fetch('/servers')
     .then(value => value.json())
     .then(config => {
         ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             <React.StrictMode>
-                <ConfigProvider config={config}>
+                <ServersProvider servers={config}>
                     <App />
-                </ConfigProvider>
+                </ServersProvider>
             </React.StrictMode>,
         )
     });

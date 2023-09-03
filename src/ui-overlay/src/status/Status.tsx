@@ -1,19 +1,26 @@
 import {useConfiguration} from "../Configuration";
-import {useState} from "react";
-import {FiSettings} from "react-icons/fi";
+import {useImperativeHandle, useRef, useState, forwardRef} from "react";
 import './Status.css';
+import {FaInfoCircle} from "react-icons/fa";
 
-export default function Status() {
+
+
+const Status = () => {
     const serverConfig = useConfiguration();
     const [show, setShow] = useState(false);
+    const buttonRef = useRef(null);
 
-    const onClick = () => {
-        setShow(prevState => !prevState);
+    const onClick = (e: any) => {
+        if (e.target === buttonRef.current) {
+            setShow(prevState => !prevState);
+        } else {
+            setShow(false);
+        }
     };
 
     return (
         <>
-        <button onClick={onClick}><FiSettings /></button>
+        <button ref={buttonRef} onClick={onClick}><FaInfoCircle /></button>
             {show && <div className='status'>
             <div className='row'>
                 <label>Jar file: </label><span>{serverConfig.JarFile}</span>
