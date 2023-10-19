@@ -3,6 +3,7 @@ import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import * as path from "path";
 import * as process from "process";
 import {getConfiguration} from "./Configuration";
+import SendPlayerNotification from "./SendPlayerNotification";
 const app = express();
 const port = process.argv[2] ?? 3000;
 
@@ -36,7 +37,10 @@ const createMinecraftProcess = ({ onOutputData, onErrorData }: MinecraftProcessP
 }
 
 let mineCraftProcess: ChildProcessWithoutNullStreams | undefined = createMinecraftProcess({
-    onOutputData: val => minecraftProcessOutPut.push(val),
+    onOutputData: val => {
+        minecraftProcessOutPut.push(val);
+        SendPlayerNotification.notifyPlayerConnected(val);
+    },
     onErrorData: () => undefined,
 });
 
@@ -72,7 +76,10 @@ app.post("/start", (req, res) => {
        res.sendStatus(409);
    } else {
        mineCraftProcess = createMinecraftProcess({
-           onOutputData: val => minecraftProcessOutPut.push(val),
+           onOutputData: val => {
+               minecraftProcessOutPut.push(val);
+               SendPlayerNotification.notifyPlayerConnected(val);
+           },
            onErrorData: () => undefined,
        });
        res.sendStatus(200);
@@ -111,6 +118,16 @@ app.post("/save", (req, res) => {
 app.post("/clear", (req, res) => {
    minecraftProcessOutPut = [];
    res.sendStatus(200);
+});
+
+app.post("/enable-bot", (req, res) => {
+    SendPlayerNotification.enable = true;
+    res.sendStatus(200);
+});
+
+app.post("/disable-bot", (req, res) => {
+    SendPlayerNotification.enable = false;
+    res.sendStatus(200);
 });
 
 app.listen(port, () => {
