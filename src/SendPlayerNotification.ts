@@ -1,4 +1,5 @@
 import request from "request";
+import {DiscordConfig} from "./Configuration";
 
 let playerCount = 0;
 
@@ -7,7 +8,7 @@ class SendPlayerNotification {
     public enable: boolean = true;
 
 
-    public notifyPlayerConnected = (output: string) => {
+    public notifyPlayerConnected = (output: string, { serverId, channelId }: DiscordConfig) => {
         if (!this.enable) {
             return;
         }
@@ -30,7 +31,9 @@ class SendPlayerNotification {
                 method: "POST",
                 json: true,
                 body: {
-                    "player_name": playerName
+                    "player_name": playerName,
+                    "serverId": serverId,
+                    "channelId": channelId,
                 }
             }, function (error, response, _){
                 console.log(response);
@@ -41,7 +44,9 @@ class SendPlayerNotification {
                     method: "POST",
                     json: true,
                     body: {
-                        "player_name": playerName
+                        "player_name": playerName,
+                        "serverId": serverId,
+                        "channelId": channelId,
                     }
                 }, function (error, response, _){
                     console.log(response);
@@ -55,7 +60,9 @@ class SendPlayerNotification {
                 method: "POST",
                 json: true,
                 body: {
-                    "player_name": playerName
+                    "player_name": playerName,
+                    "serverId": serverId,
+                    "channelId": channelId,
                 }
             }, function (error, response, _){
                 console.log(response);

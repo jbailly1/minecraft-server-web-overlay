@@ -1,16 +1,26 @@
 import {existsSync, readFileSync, writeFileSync} from "fs";
 import path from "path";
 
+export interface DiscordConfig {
+    serverId: string;
+    channelId: string;
+}
+
 export interface AppConfig {
     JarFile: string;
     JavaOptions: string[];
     ServerOptions: string[];
+    DiscordBot: DiscordConfig;
 }
 
-const defaultConfig = {
+const defaultConfig: AppConfig = {
     JarFile: 'server.jar',
     JavaOptions: ['-Xmx2G'],
-    ServerOptions: ['nogui']
+    ServerOptions: ['nogui'],
+    DiscordBot: {
+        serverId: '',
+        channelId: ''
+    }
 };
 
 const configFile = path.join(__dirname, "config.json");

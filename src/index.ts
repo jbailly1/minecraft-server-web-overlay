@@ -39,7 +39,7 @@ const createMinecraftProcess = ({ onOutputData, onErrorData }: MinecraftProcessP
 let mineCraftProcess: ChildProcessWithoutNullStreams | undefined = createMinecraftProcess({
     onOutputData: val => {
         minecraftProcessOutPut.push(val);
-        SendPlayerNotification.notifyPlayerConnected(val);
+        SendPlayerNotification.notifyPlayerConnected(val, configuration.DiscordBot);
     },
     onErrorData: () => undefined,
 });
@@ -78,7 +78,7 @@ app.post("/start", (req, res) => {
        mineCraftProcess = createMinecraftProcess({
            onOutputData: val => {
                minecraftProcessOutPut.push(val);
-               SendPlayerNotification.notifyPlayerConnected(val);
+               SendPlayerNotification.notifyPlayerConnected(val, configuration.DiscordBot);
            },
            onErrorData: () => undefined,
        });
